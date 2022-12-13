@@ -1,0 +1,61 @@
+<%- include('partials/header'); %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="greet">Hai <%= name %>
+            </h1>
+            <hr>
+            <h2>Ini data diambil dari Object USER</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Tahun Lahir</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <%= user.username %>
+                        </td>
+                        <td>
+                            <%= user.year_of_birthdate %>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr>
+            <h2>Ini data diambil dari Object Array Kehadiran</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Pertemuan</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% kehadiran.forEach(function(data){ %>
+                        <tr>
+                            <td>
+                                <%= data.pertemuan %>
+                            </td>
+                            <!-- Example condition in ejs -->
+                            <% if (data.status===1) { %>
+                                <td>Hadir</td>
+                                <% } else if (data.status===2) { %>
+                                    <td>Ijin</td>
+                                    <% } else { %>
+                                        <td>Tidak Hadir</td>
+                                        <% } %>
+                        </tr>
+                        <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer'); %>
+</body>
+<script src="/js/home.js"></script>
+</html>
