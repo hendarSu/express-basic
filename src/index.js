@@ -2,11 +2,15 @@ const express = require("express");
 const morgan = require("morgan");
 const router = require("./routers/router");
 const registrasi = require("./routers/registrasi");
+const notFoundHandler = require("./middlewares/not-found");
+const errorHandlingInternalServerError = require("./middlewares/error-handler");
+const user = require("./routers/user");
 const app = express();
 
 app.set("view engine", "ejs");
 app.set("views", "./src/views");
 
+// Set Public Static folder
 app.use(express.static('./src/assets'));
 
 // Middleware third-party
@@ -17,38 +21,13 @@ app.use(express.urlencoded({
     extended: false
 }));
 
-// Section Registration router
+// Initial router
 app.use(router);
-app.use(registrasi);
+app.use('/registrations', registrasi);
+app.use('/users', user);
 
-/**
- * This is function middleware for error handling
- * @param {*} err 
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
- */
-const errorHandlingInternalServerError = (err, req, res, next) => {
-    console.error(err);
-    res.status(500).json({
-        status: "fail",
-        error : err.message
-    })
-}
+// Middlerware
 app.use(errorHandlingInternalServerError);
-
-/**
- * function error handler 404
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
- */
-const notFoundHandler = (req, res, next) => {
-    res.status(404).json({
-        status: "fail",
-        error : "Not Found"
-    });
-}
 app.use(notFoundHandler);
 
 app.listen(8000, () => {
