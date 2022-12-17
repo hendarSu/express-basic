@@ -3,7 +3,7 @@ const user = express.Router();
 const fs = require('fs');
 
 user.get("/", (req, res) => {
-    fs.readFile("./src/database/user.json","utf8", (err, data) => {
+    fs.readFile("./src/database/user.json", "utf8", (err, data) => {
         if (err) {
           res.status(500).json({
             status: err.code,
